@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+
+<head>
+    <title>Login</title>
+</head>
+
+<body>
+
+    <section layout:fragment="content" class="container min-vh-100">
+        <div class="card p-md-5 shadow my-5 w-form">
+            <div class="card-header">
+                <h2 class="text-center my-5">Accedi</h2>
+            </div>
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">
+                    Email o Password non valide
+                </div>
+            </div>
+            <div th:if="${param.logout}" class="flash-message">
+                <div class="alert alert-success">
+                    Sei stato disconnesso!
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="POST" role="form" th:action="@{/login}">
+                    <div class="form-outline my-3">
+                        <label for="username" class="form-label">Email</label>
+                        <input type="username" id="username" class="form-control form-control-lg" name="username"/>
+                    </div>
+                    <div class="form-outline my-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" class="form-control form-control-lg" name="password"/>
+                    </div>
+                    <div class="d-flex flex-column my-5 gap-3">
+                        <button class="btn btn-primary py-2 w-50 mx-auto" type="submit">Accedi</button>
+                        <span>Non sei ancora registrato? <a th:href="@{/register}">Registrati</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

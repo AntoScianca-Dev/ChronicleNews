@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+
+<head>
+    <title th:text="${article.title}"></title>
+</head>
+
+<body>
+    <section layout:fragment="content" class="min-vh-100">
+        <h1 class="text-center py-3" th:text="${article.title}"></h1>
+        
+        <!-- dettaglio articolo-->
+        <div class="container pb-5">
+            <div class="row">
+                <div class="col-12 w-75 mx-auto col-md-5 mb-3 border-top border-bottom rounded-2 d-flex justify-content-center">
+                    <!-- immagine di default -->
+                    <img th:if="${article.images.size() == 0}" th:src="@{/images/default.jpg}" class="my-3 img-fluid img-article img-article-detail  rounded-5" alt="immagine di default">
+                    
+                    <!-- immagine singola -->
+                    <img th:if="${article.images.size() == 1}" th:src="@{${article.images[0].path}}" class="my-3 img-fluid img-article img-article-detail rounded-5" alt="immagine dell'articolo">
+                    
+                    <!-- carosello per immagini multiple -->
+                    <div id="carouselExample" class="carousel slide my-3 w-100" th:if="${article.images.size() > 1}">
+                        <div class="carousel-inner">
+                            <div class="carousel-item" th:classappend="${iterStat.index == 0} ? ' active'"  th:each="image, iterStat : ${article.images}">
+                                <div class="w-100 d-flex justify-content-center align-items-center">
+                                    <img th:src="@{${image.path}}" class="img-article img-article-detail rounded-5" alt="immagini dell'articolo">
+                                </div>
+                            </div>
+                        </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                    </div>
+                </div>
+                <div class="col-12 col-md-10 mx-auto px-5">
+                    <h2 class="card-subtitle mb-2" th:text="${article.subtitle}"></h2>
+
+                    <p class="fs-5"> Categoria:
+                        <a th:if="${article.category != null}" th:href="@{/categories/search/{id}(id=${article.category.id})}" class="text-capitalize fw-bold text-primary" th:text="${article.category.name}"></a>
+                    </p>
+
+                    <p th:if="${article.category == null}">Nessuna categoria</p>
+
+                    <hr class="w-75 mx-auto text-primary">
+                    <p th:utext="${article.body}"></p>
+
+                    <p class="card-text text-end fst-italic">
+                        Scritto da 
+                        <a th:href="@{/search/{id}(id=${article.user.id})}" class="text-info">
+                            <span class="card-text text-end fst-italic text-capitalize" th:text="${article.user.username}"></span>
+                        </a>
+                        <br>
+                        il <span th:text="${article.publishDate}"></span>
+                    </p>
+                    <div>
+                        <a href="#" class="text-info pointer" onclick="goBack()">Torna indietro</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </section>
+</body>
+</html>

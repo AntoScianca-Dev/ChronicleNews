@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+
+<head>
+    <title>Dashboard Writer</title>
+</head>
+
+<body>
+    <section layout:fragment="content">
+
+        <div th:if="${successMessage}" class="flash-message">
+            <div class="alert alert-info" th:text="${successMessage}">
+                Operazione riuscita!
+            </div>
+        </div>
+        
+        <div>
+            <h1 class="text-center">DASHBOARD WRITER</h1>
+            <hr>
+            <div>
+                <div class="container pb-5" >
+
+                    <div class="row">
+                        <div class="col-12" >
+                            <div class="row py-3 border border-1 rounded-pill col-12 col-md-7 mx-auto mb-4">
+                                <div class="col-4">
+                                    <h4 class="text-center fs-6 m-0">Articoli <i class="fa-solid fa-circle-check text-success"></i> 
+                                        <span th:if="${articlesWritten > 0}" th:text="${articlesWritten}" ></span>
+                                        <span th:unless="${articlesWritten > 0}" >0</span>
+                                    </h4>
+                                </div>
+                                <div class="col-4">
+                                    <h4 class="text-center fs-6 m-0">Articoli <i class="fa-solid fa-list-check"></i>
+                                        <span th:if="${articlesInReview > 0}" th:text="${articlesInReview}" ></span>
+                                        <span th:unless="${articlesInReview > 0}" >0</span>
+                                    </h4>
+                                </div>
+                                <div class="col-4">
+                                    <h4 class="text-center fs-6 m-0">Articoli <i class="fa-solid fa-ban text-danger"></i>
+                                        <span th:if="${articlesReject > 0}" th:text="${articlesReject}" ></span>
+                                        <span th:unless="${articlesReject > 0}" >0</span>
+                                    </h4>
+                                </div>
+                            </div>
+
+
+
+                            <a th:href="@{/articles/create}" class="btn btn-info mb-3">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Aggiungi articolo</span>
+                            </a>
+                            <h2 th:text="${title}"></h2>
+
+
+                            <table class="table table-striped table-responsive-lg" th:if="${articles.size() > 0}">
+                                <thead >
+                                    <tr>
+                                        <th class="text-primary">ID</th>
+                                        <th class="text-primary">Titolo</th>
+                                        <th class="text-primary">Sottotitolo</th>
+                                        <th class="text-primary">Categoria</th>
+                                        <th class="text-primary text-center">#Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="article : ${articles}">
+                                        <td class="text-body" th:text="${article.id}"></td>
+                                        <td class="text-body" th:text="${article.title}"></td>
+                                        <td class="text-body" th:text="${article.subtitle}"></td>
+                                        <td th:if="${article.category}" class="text-body text-capitalize" th:text="${article.category.name}"></td>
+                                        <td th:unless="${article.category}" class="text-body">Nessuna categoria</td>
+                                        <td class="text-body">
+                                            <div class="dropdown dropstart d-md-none">
+                                                <button class="btn btn-primary d-flex align-items-center justify-content-center p-3" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa-solid fa-bars"></i>
+                                                </button>
+                                                <ul class="dropdown-menu p-2">
+                                                    <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="btn me-1 btn-info">
+                                                        <i class="fa-brands fa-readme"></i>
+                                                    </a>
+                                                    <a th:href="@{/articles/edit/{id}(id=${article.id})}" class="btn me-1 btn-warning">
+                                                        <i class="fa-solid fa-pen"></i>
+                                                    </a>
+                                                    <a th:href="@{/articles/delete/{id}(id=${article.id})}" class="btn btn-danger">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </a>
+                                                </ul> 
+                                            </div>
+                                            <div class="d-none d-md-flex justify-content-evenly">
+                                                <a th:href="@{/articles/detail/{id}(id=${article.id})}" class="btn btn-info">
+                                                    <i class="fa-brands fa-readme"></i>
+                                                </a>
+                                                <a th:href="@{/articles/edit/{id}(id=${article.id})}" class="btn btn-warning">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                </a>
+                                                <a th:href="@{/articles/delete/{id}(id=${article.id})}" class="btn btn-danger">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="container" th:if="${articles.size() == 0}">
+                                <div class="row px-2 px-md-0">
+                                    <h3>Non hai ancora scritto nessun articolo</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+</body>
+</html>

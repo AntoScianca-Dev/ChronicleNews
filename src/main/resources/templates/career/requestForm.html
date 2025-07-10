@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+
+<head>
+    <title>Lavora con noi</title>
+</head>
+
+<body>
+    <section layout:fragment="content" class="container min-vh-100">
+        <div class="card p-md-5 shadow my-5 w-form">
+            <div class="card-header">
+                <h1 class="text-center mb-5">Richiesta di collaborazione</h1>
+            </div>
+            <div class="card-body">
+                <form method="POST" role="form" th:action="@{/operations/career/request/save}" th:object="${careerRequest}" enctype="multipart/form-data">
+                    <div class="form-outline my-3">
+                        <label for="body" class="form-label">Motivo della richiesta: </label>
+                        <textarea type="text" id="body" class="form-control form-control-lg" name="body" th:field="*{body}" rows="3"></textarea>
+                    </div>
+                    <div class="form-outline my-3">
+                        <label for="body" class="form-label">Seleziona il ruolo che vuoi ricoprire: </label>
+                        <select class="form-control" th:field="*{role}" id="role">
+                            <option th:each="role:${roles}" th:value="${role.id}" th:text="${#strings.substring(role.name, 5)}"></option>
+                        </select>
+                    </div>
+                    <div class="d-flex flex-column my-5 gap-3">
+                        <button class="btn btn-primary py-2 w-50 mx-auto" type="submit">Effettua richiesta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

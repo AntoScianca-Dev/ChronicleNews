@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+
+<head>
+    <title>Dashboard Revisor</title>
+</head>
+
+<body>
+    <section layout:fragment="content">
+
+        <div th:if="${successMessage}" class="flash-message">
+            <div class="alert alert-info" th:text="${successMessage}">
+                Operazione riuscita!
+            </div>
+        </div>
+        
+        <div>
+            <h1 class="text-center">DASHBOARD REVISOR</h1>
+            <hr>
+            <div>
+                <div class="container pb-5" >
+
+                    <!-- tabella articoli da revisionare -->
+                    <div class="row">
+                        <div class="col-12" >
+                            <div class="row py-3 border border-1 rounded-pill col-12 col-md-7 mx-auto mb-4">
+                                <div class="col-4">
+                                    <h4 class="text-center fs-6 m-0">Articoli <i class="fa-solid fa-list-check"></i>
+                                        <span th:if="${articlesToBeRevised > 0}" th:text="${articlesToBeRevised}" ></span>
+                                        <span th:unless="${articlesToBeRevised > 0}" >0</span>
+                                    </h4>
+                                </div>
+                                <div class="col-4">
+                                    <h4 class="text-center fs-6 m-0">Articoli <i class="fa-solid fa-circle-check text-success"></i> 
+                                        <span th:if="${articlesAccepted > 0}" th:text="${articlesAccepted}" ></span>
+                                        <span th:unless="${articlesAccepted > 0}" >0</span>
+                                    </h4>
+                                </div>
+                                <div class="col-4">
+                                    <h4 class="text-center fs-6 m-0">Articoli <i class="fa-solid fa-ban text-danger"></i>
+                                        <span th:if="${articlesRejected > 0}" th:text="${articlesRejected}" ></span>
+                                        <span th:unless="${articlesRejected > 0}" >0</span>
+                                    </h4>
+                                </div>
+                            </div>
+
+                            <h2><span th:text="${title}"></span><i class="ps-3 fa-solid fa-list-check"></i></h2>
+                            <table class="table table-striped table-responsive-lg" th:if="${articles.size() > 0}">
+                                <thead >
+                                    <tr>
+                                        <th class="text-primary">ID</th>
+                                        <th class="text-primary">Titolo</th>
+                                        <th class="text-primary">Sottotitolo</th>
+                                        <th class="text-primary">Categoria</th>
+                                        <th class="text-primary text-center">#Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="article : ${articles}">
+                                        <td class="text-body" th:text="${article.id}"></td>
+                                        <td class="text-body" th:text="${article.title}"></td>
+                                        <td class="text-body" th:text="${article.subtitle}"></td>
+                                        <td th:if="${article.category}" class="text-body text-capitalize" th:text="${article.category.name}"></td>
+                                        <td th:unless="${article.category}" class="text-body">Nessuna categoria</td>
+                                        <td class="text-body text-center">
+                                            <a th:href="@{/articles/revisor/detail/{id}(id=${article.id})}" class="btn btn-info d-flex align-items-center justify-content-center w-btn py-2 mx-auto">
+                                                <i class="fa-brands fa-readme"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h3 th:if="${articles.size == 0}">Non ci sono articoli da revisionare!</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- tabella articoli accettati -->
+                    <div class="row my-5">
+                        <div class="col-12" >
+                            <h2 class="text-success"><span th:text="${titleA}"></span><i class="ps-3 fa-solid fa-circle-check"></i></h2>
+                            <table class="table table-striped table-responsive-lg" th:if="${articlesA.size() > 0}">
+                                <thead >
+                                    <tr>
+                                        <th class="text-primary">ID</th>
+                                        <th class="text-primary">Titolo</th>
+                                        <th class="text-primary">Sottotitolo</th>
+                                        <th class="text-primary">Categoria</th>
+                                        <th class="text-primary text-center">#Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="article : ${articlesA}">
+                                        <td class="text-body" th:text="${article.id}"></td>
+                                        <td class="text-body" th:text="${article.title}"></td>
+                                        <td class="text-body" th:text="${article.subtitle}"></td>
+                                        <td th:if="${article.category}" class="text-body text-capitalize" th:text="${article.category.name}"></td>
+                                        <td th:unless="${article.category}" class="text-body">Nessuna categoria</td>
+                                        <td class="text-body text-center">
+                                            <a th:href="@{/articles/revisor/detail/{id}(id=${article.id})}" class="btn btn-info d-flex align-items-center justify-content-center w-btn py-2 mx-auto">
+                                                <i class="fa-brands fa-readme"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h3 th:if="${articlesA.size == 0}">Non ci sono articoli accettati!</h3>
+                        </div>
+                    </div>
+
+                    <!-- tabella articoli rifiutati -->
+                    <div class="row">
+                        <div class="col-12" >
+                            <h2 class="text-danger"><span th:text="${titleR}"></span><i class="ps-3 fa-solid fa-ban "></i></h2>
+                            <table class="table table-striped table-responsive-lg" th:if="${articlesR.size() > 0}">
+                                <thead >
+                                    <tr>
+                                        <th class="text-primary">ID</th>
+                                        <th class="text-primary">Titolo</th>
+                                        <th class="text-primary">Sottotitolo</th>
+                                        <th class="text-primary">Categoria</th>
+                                        <th class="text-primary text-center">#Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="article : ${articlesR}">
+                                        <td class="text-body" th:text="${article.id}"></td>
+                                        <td class="text-body" th:text="${article.title}"></td>
+                                        <td class="text-body" th:text="${article.subtitle}"></td>
+                                        <td th:if="${article.category}" class="text-body text-capitalize" th:text="${article.category.name}"></td>
+                                        <td th:unless="${article.category}" class="text-body">Nessuna categoria</td>
+                                        <td class="text-body text-center">
+                                            <a th:href="@{/articles/revisor/detail/{id}(id=${article.id})}" class="btn btn-info d-flex align-items-center justify-content-center w-btn py-2 mx-auto">
+                                                <i class="fa-brands fa-readme"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h3 th:if="${articlesR.size == 0}">Non ci sono articoli rifiutati!</h3>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+</body>
+</html>

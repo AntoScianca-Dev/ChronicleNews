@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+
+<head>
+    <title>Crea articolo</title>
+</head>
+
+<body>
+    <section layout:fragment="content" class="container min-vh-100">
+        <div class="card p-md-5 shadow my-5">
+            <div class="card-header">
+                <h2 class="text-center my-3">Crea articolo</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" role="form" th:action="@{/articles}" th:object="${article}" enctype="multipart/form-data">
+                    <div class="form-outline my-3">
+                        <label class="form-label" for="title">Titolo</label>
+                        <input type="text" id="title" class="form-control form-control-lg" name="title" th:field="*{title}"/>
+                        <div th:errors="*{title}" class="invalid-feedback" th:if="${#fields.hasErrors('title')}"></div>
+                    </div>
+                    <div class="form-outline my-3">
+                        <label for="subtitle" class="form-label">Sottotitolo</label>
+                        <input type="text" id="subtitle" class="form-control form-control-lg" name="subtitle" th:field="*{subtitle}" />
+                        <div th:errors="*{subtitle}" class="invalid-feedback" th:if="${#fields.hasErrors('subtitle')}"></div>
+                    </div>
+                    <div class="form-outline my-3">
+                        <label for="body" class="form-label">Articolo</label>
+                        <textarea type="text" id="body" class="form-control form-control-lg" name="body" th:field="*{body}" rows="3"></textarea>
+                        <div th:errors="*{body}" class="invalid-feedback" th:if="${#fields.hasErrors('body')}"></div>
+                    </div>
+                    <div class="form-outline my-3">
+                        <label for="body" class="form-label">Categoria</label>
+                        <select class="form-control text-capitalize" th:field="*{category}" id="category">
+                            <option th:each="category:${categories}" th:value="${category.id}" th:text="${category.name}" class="text-capitalize"></option>
+                            <div th:errors="*{category}" class="invalid-feedback" th:if="${#fields.hasErrors('category')}"></div>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-outline my-3">
+                                <label for="files" class="form-label">Immagine:</label>
+                                <input type="file" id="files" class="form-control form-control-lg" name="files" multiple/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-outline">
+                                <label class="form-label">Anteprima:</label>
+                                <div id="previewContainer" class="d-flex flex-wrap gap-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column my-5 gap-3">
+                        <button class="btn btn-primary py-2 w-50 mx-auto" type="submit">Crea articolo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

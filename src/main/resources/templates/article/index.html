@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+
+<head>
+    <title>Articoli</title>
+</head>
+
+<body>
+    <section layout:fragment="content" class="min-vh-100">
+        <h1 class="text-center py-5" th:text="${title}"></h1>
+        
+        <!-- card articoli -->
+        <div class="container pb-5" th:if="${articles.size() > 0}">
+            <div class="row">
+                <div class="col-12"  th:each="article:${articles}">
+                    <div class="card w-75 mx-auto py-1 my-3 border-0 border-top border-bottom">
+                        <div class="card-body row">
+                            <div class="col-12 col-md-5 pb-2 pb-md-0 d-flex justify-content-center">
+                                <img th:if="${article.images.size() == 0}" th:src="@{/images/default.jpg}" class="img-fluid img-article  rounded-5" alt="immagine di default">
+                                <img th:if="${article.images.size > 0}" th:src="${article.images[0].path}" class="img-fluid img-article rounded-5" alt="immagine dell'articolo">
+                            </div>
+                            <div class="col-12 col-md-7 d-flex flex-column justify-content-center">
+                                <h5 class="card-title fw-bold" th:text="${article.title}"></h5>
+                                <p class="card-subtitle mb-2" th:text="${article.subtitle}"></p>
+                                <div class="d-md-flex justify-content-md-between">
+                                    <p class="card-text text-end fst-italic m-0">Scritto da <span class="card-text text-end fst-italic text-capitalize" th:text="${article.user.username}"></span></p>
+                                    <p class="card-text text-end m-0" th:text="${article.publishDate}"></p>
+                                </div>
+                                <div class="d-flex justify-content-between py-2 col-12">
+                                    <a th:href="@{/articles/detail/{id}(id=${article.id})}">
+                                        <button class="btn btn-info">
+                                            Leggi l'articolo
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- nessun articolo presente -->
+        <div class="container" th:if="${articles.size() == 0}">
+            <div class="row px-2 px-md-5 pb-5">
+                <h3 class=" ps-md-5 ms-md-5">Nessun articolo pubblicato</h3>
+                <a th:href="@{articles/create}" sec:authorize="hasRole('ROLE_WRITER')" class="btn btn-success w-auto ms-2 ms-md-5">Crea articolo</a>
+            </div>
+        </div>
+        
+        <div class="container px-md-5">
+            <div class="row px-md-5 pb-md-5">
+                <a href="#" class="text-info pointer ps-4 ps-md-5 ms-md-5" onclick="goBack()">Torna indietro</a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

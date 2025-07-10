@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+
+<head>
+    <title>Registrati</title>
+</head>
+
+<body>
+    <section layout:fragment="content" class="container min-vh-100">
+        <div class="card p-md-5 shadow my-5 w-form">
+            <div class="card-header">
+                <h2 class="text-center my-5">Registrati</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST" role="form" th:action="@{/register/save}" th:object="${user}">
+                    <div class="form-outline my-3">
+                        <label class="form-label" for="firstName">Nome</label>
+                        <input type="text" id="firstName" class="form-control form-control-lg" name="firstName" th:field="*{firstName}"/>
+                        <div th:errors="*{firstName}" class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}"></div>
+                    </div>
+                    <div class="form-outline my-3">
+                        <label for="lastName" class="form-label">Cognome</label>
+                        <input type="text" id="lastName" class="form-control form-control-lg" name="lastName" th:field="*{lastName}" />
+                        <div th:errors="*{lastName}" class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}"></div>
+                    </div>
+                    <div class="form-outline my-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" class="form-control form-control-lg" name="email" th:field="*{email}" />
+                        <div th:errors="*{email}" class="invalid-feedback" th:if="${#fields.hasErrors('email')}"></div>
+                    </div>
+                    <div class="form-outline my-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" class="form-control form-control-lg" name="password" th:field="*{password}" />
+                        <div th:errors="*{password}" class="invalid-feedback" th:if="${#fields.hasErrors('password')}"></div>
+                    </div>
+                    <div class="d-flex flex-column my-5 gap-3">
+                        <button class="btn btn-primary py-2 w-50 mx-auto" type="submit">Registrati</button>
+                        <span>Sei già registrato? <a th:href="@{/login}">Accedi</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
