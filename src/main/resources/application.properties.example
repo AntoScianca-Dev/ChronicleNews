@@ -1,21 +1,21 @@
 # connessione database
-spring.application.name=****
-spring.datasource.url=jdbc:mysql:****
-spring.datasource.username=****
-spring.datasource.password=****
-spring.datasource.driver-class-name=****
+spring.application.name=progetto_finale_sciancalepore
+spring.datasource.url=jdbc:mysql://localhost:3306/progettoFinaleSciancalepore
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 # connessione supabase
-supabase.url=****
-supabase.key=****
-supabase.bucket=****
-supabase.image=****
+supabase.url=https://olmlhugcqdisanrnkxgg.supabase.co
+supabase.key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sbWxodWdjcWRpc2Fucm5reGdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEzNTc2ODYsImV4cCI6MjA2NjkzMzY4Nn0.hn-KLoekHgron7LpIWHsZ18J7OZn_KFSjEX_KPkGr2E
+supabase.bucket=/storage/v1/object/dbfinalproject/
+supabase.image=/storage/v1/object/public/dbfinalproject/
 
 # connessione mailtrap
-spring.mail.host=****
-spring.mail.port=****
-spring.mail.username=****
-spring.mail.password=****
+spring.mail.host=sandbox.smtp.mailtrap.io
+spring.mail.port=2525
+spring.mail.username=299b07fc11e57e
+spring.mail.password=8c65bb51647193
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 spring.mail.properties.mail.smtp.starttls.required=true
