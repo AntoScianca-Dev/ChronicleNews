@@ -60,6 +60,19 @@
                         <br>
                         il <span th:text="${article.publishDate}"></span>
                     </p>
+                    <div class="my-5 d-flex align-items-center justify-content-center">
+                        <div id="reaction-box" class="d-flex align-items-center justify-content-center shadow rounded-pill" th:attr="data-article-id=${article.id}">
+                            <button class="btn reaction-btn btn-lg" data-reaction="👍">👍</button>
+                            <button class="btn reaction-btn btn-lg" data-reaction="❤️">❤️</button>
+                            <button class="btn reaction-btn btn-lg" data-reaction="😆">😆</button>
+                            <button class="btn reaction-btn btn-lg" data-reaction="😮">😮</button>
+                            <button class="btn reaction-btn btn-lg" data-reaction="😢">😢</button>
+                            <button class="btn reaction-btn btn-lg" data-reaction="😡">😡</button>
+                        </div>
+
+                        <p id="selected-reaction" style="margin-top: 10px;"></p>
+
+                    </div>
                     <div>
                         <a href="#" class="text-info pointer" onclick="goBack()">Torna indietro</a>
                     </div>
@@ -67,7 +80,6 @@
 
             </div>
         </div>
-
 
     </section>
 </body>
